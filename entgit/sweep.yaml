@@ -1,0 +1,21 @@
+program: main.py
+method: grid
+project: weighted_ce
+metric:
+  goal: minimize
+  name: Validation_Acc
+parameters:
+  lr:
+    values: [0.01]
+  mom:
+    values: [1e-2]
+  trainable_layers:
+    values: [["layer4","layer3", "layer2"]]
+  type_init:
+    values: ['xavier_uniform']
+  fc_random_init:
+    values: [True]
+  ce_weights:
+    values: [[0.75 ,1.25 , 1], [0.5, 1.5, 1], [0.5, 2, 0.5]]
+  repeats:
+    values: [0,1,2,3,4,5,6,7,8,9]
