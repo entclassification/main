@@ -55,7 +55,7 @@ def main():
     norm_confmats = []
     confmats = []
 
-    best_state_dict_init = torch.load("models/best_init")
+    best_state_dict_init = torch.load("models/inits/best.pth")
     for fold in range(k):
         mod = model.get_pretrained_model(layer_names=setting["layers"], type_init=setting["init"]).to(device)
         mod.load_state_dict(best_state_dict_init)
