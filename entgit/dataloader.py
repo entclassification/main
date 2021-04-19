@@ -12,7 +12,7 @@ IMG_SIZE = 224
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-
+#If this class is to be used with get_loaders, the data of testing and training/validation images needs to be manually seperated, and then the class method get_paths_and_labels needs to be updated
 class dataset_(Dataset):
 
     def __init__(self, mode):
@@ -77,7 +77,6 @@ class dataset_(Dataset):
 
         return x, label
 
-
 def get_loaders(batch_size, split=1.0):
     # torch specified mean and std for pre trained net
     train_inds = []
@@ -85,6 +84,8 @@ def get_loaders(batch_size, split=1.0):
 
     last = 0
     train_dataset = dataset_("train_val")
+    
+    #for each class, shuffle the order of images, then split this order from beginning to the appropiate train split, and then use the rest to find the val split. 
 
     for i in range(3):
         n = np.count_nonzero(train_dataset.labels == i)
@@ -127,6 +128,7 @@ def get_fold_loaders(k, batch_size):
     train_dataset = dataset_("train_val")
     shuffled_indices = []
     last = 0
+    #get shuffled indices for each class
     for i in range(3):
         n = np.count_nonzero(train_dataset.labels == i)
         indices = list(range(last, last + n))
@@ -136,7 +138,7 @@ def get_fold_loaders(k, batch_size):
         np.random.shuffle(indices)
         shuffled_indices.append(indices)
         
-
+    #for each fold, find the appropiate validation indices using the above shuffled indices 
     for fold in range(k):
         train_inds = []
         val_inds = []
