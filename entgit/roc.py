@@ -23,7 +23,7 @@ random.seed(7)
 def get_net(id):
 
     resnet = model.get_model()
-    h = torch.load("models/" + str(id) , map_location='cuda:0')
+    h = torch.load("models/folds/" + str(id) , map_location='cuda:0')
     resnet.load_state_dict(h)
     resnet.eval()
     resnet.to(device)
